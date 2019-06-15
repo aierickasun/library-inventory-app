@@ -1,5 +1,7 @@
 # LibraryInventoryApp
 
+This project is intended to assist with my local library in keeping track of its inventory.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
 ## Development server
