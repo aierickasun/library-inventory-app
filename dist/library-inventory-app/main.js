@@ -134,11 +134,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _overview_overview_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./overview/overview.component */ "./src/app/overview/overview.component.ts");
-/* harmony import */ var _search_search_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./search/search.component */ "./src/app/search/search.component.ts");
-/* harmony import */ var _change_change_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./change/change.component */ "./src/app/change/change.component.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _overview_overview_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./overview/overview.component */ "./src/app/overview/overview.component.ts");
+/* harmony import */ var _search_search_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./search/search.component */ "./src/app/search/search.component.ts");
+/* harmony import */ var _change_change_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./change/change.component */ "./src/app/change/change.component.ts");
+
 
 
 
@@ -155,17 +157,18 @@ var AppModule = /** @class */ (function () {
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                _overview_overview_component__WEBPACK_IMPORTED_MODULE_5__["OverviewComponent"],
-                _search_search_component__WEBPACK_IMPORTED_MODULE_6__["SearchComponent"],
-                _change_change_component__WEBPACK_IMPORTED_MODULE_7__["ChangeComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
+                _overview_overview_component__WEBPACK_IMPORTED_MODULE_6__["OverviewComponent"],
+                _search_search_component__WEBPACK_IMPORTED_MODULE_7__["SearchComponent"],
+                _change_change_component__WEBPACK_IMPORTED_MODULE_8__["ChangeComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"]
             ],
             providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -231,49 +234,42 @@ var ChangeComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/item.ts":
-/*!*************************!*\
-  !*** ./src/app/item.ts ***!
-  \*************************/
-/*! exports provided: Item */
+/***/ "./src/app/inventory-data.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/inventory-data.service.ts ***!
+  \*******************************************/
+/*! exports provided: InventoryDataService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Item", function() { return Item; });
-var Item = /** @class */ (function () {
-    function Item(name, room, quantity) {
-        this.name = name;
-        this.room = room;
-        this.quantity = quantity;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InventoryDataService", function() { return InventoryDataService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+var InventoryDataService = /** @class */ (function () {
+    function InventoryDataService(http) {
+        this.http = http;
+        this.inventoryDbUrl = "https://sfpl-library-inventory.herokuapp.com/api/inventory";
     }
-    return Item;
+    InventoryDataService.prototype.getInventory = function () {
+        return this.http.get(this.inventoryDbUrl)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (_) { return console.log('fetched inventory'); }));
+    };
+    InventoryDataService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    ], InventoryDataService);
+    return InventoryDataService;
 }());
 
-
-
-/***/ }),
-
-/***/ "./src/app/mock-items.ts":
-/*!*******************************!*\
-  !*** ./src/app/mock-items.ts ***!
-  \*******************************/
-/*! exports provided: items */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "items", function() { return items; });
-/* harmony import */ var _item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./item */ "./src/app/item.ts");
-
-var items = [
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Keyboard", "Room 1", 10),
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Monitor", "Room 2", 1),
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Mouse", "Room 1", 50),
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Desktop", "Room 5", 0),
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Laptops", "Room 7", 2),
-    new _item__WEBPACK_IMPORTED_MODULE_0__["Item"]("Keyboard", "Room 2", 2)
-];
 
 
 /***/ }),
@@ -285,7 +281,7 @@ var items = [
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container fill\">\n  <div class=\"row\">\n    <div class=\"col-sm-4 filter-suggestions\">\n      <div class=\"col-sm-12 filter-title\">\n        <h4> Filter </h4>\n      </div>\n\n      <div class=\"col-sm-12 filter-body\">\n        <div class=\"form-title\">\n          <h5> Items </h5>\n\n        </div>\n        <div class=\"form-check\" *ngFor=\"let item of itemSet\">\n          <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"{{item}}\" (click)=\"handleItemFilterClick(item)\">\n          <label class=\"form-check-label\" for=\"{{ item }}\">\n            {{ item }}\n          </label>\n        </div>\n\n        <div class=\"form-title\">\n          <h5> Rooms </h5>\n        </div>\n        <div class=\"form-check\" *ngFor=\"let room of roomSet\">\n          <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"{{room}}\" (click)=\"handleRoomFilterClick(room)\">\n          <label class=\"form-check-label\" for=\"{{room}}\">\n            {{ room }}\n          </label>\n        </div>\n        <div class=\"col-sm-8 apply-button\">\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"apply()\">Apply</button>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"col-sm-8 items\">\n      <div class=\"col-sm-12 filter-title\">\n        <h4> Inventory </h4>\n      </div>\n\n      <div class=\"col-sm-12 filter-body\">\n\n\n        <table class=\"table\">\n\n          <thead>\n            <th scope=\"col\">Item</th>\n            <th scope=\"col\">Amount</th>\n            <th scope=\"col\">Room</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let item of items\">\n              <td>{{item.name}}</td>\n              <td>{{item.quantity}}</td>\n              <td>{{item.room}}</td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container fill\">\n  <div class=\"row\">\n    <div class=\"col-sm-4 filter-suggestions\">\n      <div class=\"col-sm-12 filter-title\">\n        <h4> Filter </h4>\n      </div>\n\n      <div class=\"col-sm-12 filter-body\">\n        <div class=\"form-title\">\n          <h5> Items </h5>\n\n        </div>\n        <div class=\"form-check\" *ngFor=\"let item of itemSet\">\n          <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"{{item}}\" (click)=\"handleItemFilterClick(item)\">\n          <label class=\"form-check-label\" for=\"{{ item }}\">\n            {{ item }}\n          </label>\n        </div>\n\n        <div class=\"form-title\">\n          <h5> Rooms </h5>\n        </div>\n        <div class=\"form-check\" *ngFor=\"let room of roomSet\">\n          <input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"{{room}}\" (click)=\"handleRoomFilterClick(room)\">\n          <label class=\"form-check-label\" for=\"{{room}}\">\n            {{ room }}\n          </label>\n        </div>\n        <div class=\"col-sm-12 apply-button\">\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"apply()\">Apply</button>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"col-sm-8 items\">\n      <div class=\"col-sm-12 filter-title\">\n        <h4> Inventory </h4>\n      </div>\n\n      <div class=\"col-sm-12 filter-body\">\n\n\n        <table class=\"table\">\n\n          <thead>\n            <th scope=\"col\">Item</th>\n            <th scope=\"col\">Amount | Baseline</th>\n            <th scope=\"col\">Room | Location</th>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let item of items\">\n              <td>{{item.name}}</td>\n              <td>{{item.quantity}} | {{item.baseline}}</td>\n              <td>{{item.room}} | {{item.location}}</td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -296,7 +292,7 @@ module.exports = "<div class=\"container fill\">\n  <div class=\"row\">\n    <di
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".filter-suggestions {\n  background-color: grey;\n  text-align: center; }\n\n.items {\n  background-color: green; }\n\n.apply-button {\n  align-items: center;\n  text-align: center;\n  background-color: black; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2VyaWMvRGVza3RvcC9Ob2RlUHJvamVjdHMvbGlicmFyeS1pbnZlbnRvcnktYXBwL3NyYy9hcHAvb3ZlcnZpZXcvb3ZlcnZpZXcuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCLEVBQUE7O0FBR3BCO0VBQ0UsdUJBQXVCLEVBQUE7O0FBRXpCO0VBQ0UsbUJBQW1CO0VBQ25CLGtCQUFrQjtFQUNsQix1QkFBdUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL292ZXJ2aWV3L292ZXJ2aWV3LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpbHRlci1zdWdnZXN0aW9ucyB7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyZXk7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLml0ZW1zIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XG59XG4uYXBwbHktYnV0dG9uIHtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBibGFjaztcbn1cbiJdfQ== */"
+module.exports = ".filter-suggestions {\n  background-color: #ccc;\n  text-align: center;\n  height: 100vh; }\n\n.items {\n  background-color: white; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2VyaWMvRGVza3RvcC9Ob2RlUHJvamVjdHMvbGlicmFyeS1pbnZlbnRvcnktYXBwL3NyYy9hcHAvb3ZlcnZpZXcvb3ZlcnZpZXcuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLGFBQWEsRUFBQTs7QUFHZjtFQUNFLHVCQUF1QixFQUFBIiwiZmlsZSI6InNyYy9hcHAvb3ZlcnZpZXcvb3ZlcnZpZXcuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZmlsdGVyLXN1Z2dlc3Rpb25zIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NjYztcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBoZWlnaHQ6IDEwMHZoO1xufVxuXG4uaXRlbXMge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cbi5hcHBseS1idXR0b24ge1xuICAvLyBhbGlnbi1pdGVtczogcmlnaHQ7XG4gIC8vIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgLy8gYmFja2dyb3VuZC1jb2xvcjogYmxhY2s7XG4gIC8vIG1hcmdpbjogMCAwIGF1dG87XG59XG5cbi5mb3JtLXRpdGxlIHtcbiAgLy8gYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG4iXX0= */"
 
 /***/ }),
 
@@ -312,13 +308,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OverviewComponent", function() { return OverviewComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _mock_items__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mock-items */ "./src/app/mock-items.ts");
+/* harmony import */ var _inventory_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inventory-data.service */ "./src/app/inventory-data.service.ts");
 
 
 
 var OverviewComponent = /** @class */ (function () {
-    function OverviewComponent() {
-        this.items = _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"]; // Holds current state of items displayed
+    function OverviewComponent(inventoryDataService) {
+        this.inventoryDataService = inventoryDataService;
         this.itemSet = [];
         this.roomSet = [];
         this.filterSet = {
@@ -358,13 +354,13 @@ var OverviewComponent = /** @class */ (function () {
         var roomSet = this.filterSet.roomsSet;
         if (this.filterSet.itemsSet.length == 0 && this.filterSet.roomsSet.length == 0) {
             console.log("Show everything");
-            this.items = _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"];
+            this.items = this.persistItems;
             return;
         }
         var buildItems = [];
-        for (var i = 0; i < _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"].length; i++) {
-            if (this.inItemSet(_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].name) && this.inRoomSet(_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].room)) {
-                buildItems.push(_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i]);
+        for (var i = 0; i < this.persistItems.length; i++) {
+            if (this.inItemSet(this.persistItems[i].name) && this.inRoomSet(this.persistItems[i].room)) {
+                buildItems.push(this.persistItems[i]);
             }
         }
         console.log("Resulting set is");
@@ -391,19 +387,28 @@ var OverviewComponent = /** @class */ (function () {
         }
         return true;
     };
+    OverviewComponent.prototype.getInventory = function () {
+        var _this = this;
+        this.inventoryDataService.getInventory()
+            .subscribe(function (inventory) {
+            _this.persistItems = inventory;
+            _this.items = inventory;
+            var itemSetObj = {};
+            var roomSetObj = {};
+            for (var i = 0; i < _this.persistItems.length; i++) {
+                if (!itemSetObj[_this.persistItems[i].name]) {
+                    _this.itemSet.push(_this.persistItems[i].name);
+                    itemSetObj[_this.persistItems[i].name] = _this.persistItems[i].name;
+                }
+                if (!roomSetObj[_this.persistItems[i].room]) {
+                    _this.roomSet.push(_this.persistItems[i].room);
+                    roomSetObj[_this.persistItems[i].room] = _this.persistItems[i].room;
+                }
+            }
+        });
+    };
     OverviewComponent.prototype.ngOnInit = function () {
-        var itemSetObj = {};
-        var roomSetObj = {};
-        for (var i = 0; i < _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"].length; i++) {
-            if (!itemSetObj[_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].name]) {
-                this.itemSet.push(_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].name);
-                itemSetObj[_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].name] = _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].name;
-            }
-            if (!roomSetObj[_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].room]) {
-                this.roomSet.push(_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].room);
-                roomSetObj[_mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].room] = _mock_items__WEBPACK_IMPORTED_MODULE_2__["items"][i].room;
-            }
-        }
+        this.getInventory();
     };
     OverviewComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -411,7 +416,7 @@ var OverviewComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./overview.component.html */ "./src/app/overview/overview.component.html"),
             styles: [__webpack_require__(/*! ./overview.component.scss */ "./src/app/overview/overview.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_inventory_data_service__WEBPACK_IMPORTED_MODULE_2__["InventoryDataService"]])
     ], OverviewComponent);
     return OverviewComponent;
 }());

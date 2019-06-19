@@ -1,13 +1,19 @@
 .filter-suggestions {
-  background-color: grey;
+  background-color: #ccc;
   text-align: center;
+  height: 100vh;
 }
 
 .items {
-  background-color: green;
+  background-color: white;
 }
 .apply-button {
-  align-items: center;
-  text-align: center;
-  background-color: black;
+  // align-items: right;
+  // text-align: center;
+  // background-color: black;
+  // margin: 0 0 auto;
+}
+
+.form-title {
+  // background-color: white;
 }

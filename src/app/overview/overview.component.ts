@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { items } from '../mock-items';
+// import { items } from '../mock-items';
 import { Item } from '../item';
+import { InventoryDataService } from '../inventory-data.service';
 
 @Component({
   selector: 'app-overview',
@@ -12,7 +13,9 @@ import { Item } from '../item';
 
 export class OverviewComponent implements OnInit {
 
-  items = items; // Holds current state of items displayed
+  persistItems: any;
+
+  items : any;  // Holds current state of items displayed
 
   itemSet: any = [];
 
@@ -56,13 +59,13 @@ export class OverviewComponent implements OnInit {
     let roomSet = this.filterSet.roomsSet;
     if ( this.filterSet.itemsSet.length == 0 && this.filterSet.roomsSet.length == 0 ) {
       console.log("Show everything");
-      this.items = items;
+      this.items = this.persistItems;
       return ;
     }
     let buildItems = [];
-    for ( let i = 0; i < items.length; i++ ) {
-      if ( this.inItemSet( items[i].name ) && this.inRoomSet( items[i].room ) ) {
-        buildItems.push( items[i] );
+    for ( let i = 0; i < this.persistItems.length; i++ ) {
+      if ( this.inItemSet( this.persistItems[i].name ) && this.inRoomSet( this.persistItems[i].room ) ) {
+        buildItems.push( this.persistItems[i] );
       }
     }
     console.log("Resulting set is");
@@ -92,23 +95,33 @@ export class OverviewComponent implements OnInit {
     return true;
   }
 
-  constructor() { }
+  getInventory(): void {
+    this.inventoryDataService.getInventory()
+      .subscribe( inventory => {
+        this.persistItems = inventory;
+        this.items = inventory;
+        let itemSetObj = {};
+        let roomSetObj = {};
+
+        for ( let i = 0; i < this.persistItems.length; i++ ) {
+          if ( ! itemSetObj[this.persistItems[i].name] ) {
+            this.itemSet.push(this.persistItems[i].name);
+            itemSetObj[this.persistItems[i].name] = this.persistItems[i].name;
+          }
+          if ( ! roomSetObj[this.persistItems[i].room] ) {
+            this.roomSet.push(this.persistItems[i].room);
+            roomSetObj[this.persistItems[i].room] = this.persistItems[i].room;
+          }
+        }
+      });
+  }
+
+  constructor(
+    private inventoryDataService: InventoryDataService
+  ) { }
 
   ngOnInit() {
-    let itemSetObj = {};
-    let roomSetObj = {};
-
-    for ( let i = 0; i < items.length; i++ ) {
-      if ( ! itemSetObj[items[i].name] ) {
-        this.itemSet.push(items[i].name);
-        itemSetObj[items[i].name] = items[i].name;
-      }
-      if ( ! roomSetObj[items[i].room] ) {
-        this.roomSet.push(items[i].room);
-        roomSetObj[items[i].room] = items[i].room;
-      }
-    }
-
+    this.getInventory();
   }
 
 }
